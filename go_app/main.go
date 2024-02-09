@@ -25,7 +25,7 @@ func main() {
 
 	var err error
 
-	db, err = sql.Open("postgres", "postgres://userdb:master@127.0.0.1/greetdb2?sslmode=disable")
+	db, err = sql.Open("postgres", "postgres://userdb:master@127.0.0.1/greetdb?sslmode=disable")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,7 +35,7 @@ func main() {
 	router.GET("/greet/history", getHistory)
 	router.GET("/greet", getHello)
 
-	router.Run("127.0.0.1:8080")
+	router.Run("127.0.0.1:8000")
 
 }
 

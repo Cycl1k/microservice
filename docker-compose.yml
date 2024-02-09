@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  python:
+    container_name: app_python
+    build: python_app/
+    depends_on:
+      - db
+    command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; uvicorn main:app --host 0.0.0.0 --port 8000'
+    volumes:
+      - ./python_app:/src/python_app
+    ports:
+      -${PYTHON_PORT}:8000
+    restart: always
+
+  go:
+    container_name: app_go
+    build: go_app/
+    volumes:
+      - ./go_app:/src/go_app
+    ports:
+      -${GO_PORT}:8000
+    restart: always
+
+  db:
+    container_name: app_db
+    image: postgres
+    environment:
+      - POSTGRES_DB = ${POST_DB}
+      - POSTGRES_USER = ${POST_DB_USER}
+      - POSTGRES_PASSWORD = ${POST_DB_PSWD}
+    ports:
+      - ${POST_PORT}:5432
+    volumes:
+      - .postgres:/var/lib/postgres/data
+    restart: always

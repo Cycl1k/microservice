@@ -1,0 +1,20 @@
+FROM golang:1.19-alpine as builder
+
+WORKDIR ./
+
+RUN go mod download
+
+COPY go.mod go.sum ./
+
+RUN go build -o <BINARY_FILE_NAME> ./path/to/main.go
+
+FROM alpine:3.9
+
+RUN apk add --no-cache ca-certificates # чтобы в алпайне работал интернет
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY --from=builder /app/<BINARY_FILE_NAME>  <BINARY_FILE_NAME> 
+
+CMD ["/app/<BINARY_FILE_NAME>"]
