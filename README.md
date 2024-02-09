@@ -19,7 +19,9 @@ GO сервис, то же имеет два endpoint'а:
 # Сборка
 
 Клонировать репозиторий 
+
 `gh repo clone Cycl1k/microservice`
+
 Создайте файл .env с переменными окружения:
 
 `PYTHON_PORT = 8060
@@ -30,4 +32,5 @@ POST_DB_PSWD = master
 POST_PORT = 5432`
 
 Запустить Docker compose
+
 `docker compose up -d` 
